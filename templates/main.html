@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <title>Catalog Catalog</title>
+  </head>
+  <body id="mainBody" onload="stopAnimation()">
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+    {% include 'templates/navbar.html' %} {% block body %} {% endblock body %}
+    {% include 'templates/footer.html' %}
+  </body>
+  <script>
+    const mainBody = document.getElementById("mainBody");
+
+    function removeAllClassInPath(Filter_Value) {
+      const arrays = document.getElementsByClassName("get-path");
+
+      // remove the backslash and filter the main value
+      // const Filter_Value = e.split("/").filter((e) => e != "")[0];
+
+      for (let i = 0; i < arrays.length; i++) {
+        // remove all active class
+        arrays[i].classList.remove("active");
+        // add active in class
+        if (arrays[i].id == Filter_Value)
+          return arrays[i].classList.add("active");
+      }
+    }
+
+    function stopAnimation() {
+      mainBody.classList.add("loaded");
+
+      let path = window.location.pathname;
+      if (path != "/") {
+        const filter_path = path.split("/").filter((e) => e != "")[0];
+        removeAllClassInPath(filter_path);
+      }
+
+      // const isPath = ["/", "/about/", "/contact/", "/video/", "/photo/"];
+      // if (isPath.includes(path)) {
+      //   isPath.map((e) => {
+      //     if (e == path) {
+      //       removeAllClassInPath(e);
+      //     }
+      //   });
+      // }
+    }
+  </script>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+</html>

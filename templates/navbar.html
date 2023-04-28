@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <i class="fas fa-film mr-2"></i>
+      Catalog-Z
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            id="home"
+            class="get-path nav-link nav-link-1 active"
+            aria-current="page"
+            href="{% url 'home' %}"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="photo"
+            class="get-path nav-link nav-link-2"
+            aria-current="page"
+            href="{% url 'photo' %}"
+            >Photos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="video"
+            class="get-path nav-link nav-link-3"
+            href="{% url 'video' %}"
+            >Videos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="about"
+            class="get-path nav-link nav-link-4"
+            href="{% url 'about' %}"
+            >About</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="contact"
+            class="get-path nav-link nav-link-1"
+            href="{% url 'contact' %}"
+            >Contact</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="login"
+            class="get-path nav-link nav-link-6"
+            aria-current="page"
+            href="{% url 'login' %}"
+            >Login</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

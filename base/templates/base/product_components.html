@@ -1,0 +1,64 @@
+{% load static %}
+<div class="container-fluid tm-container-content tm-mt-60">
+  <div class="row mb-4">
+    <h2 class="col-6 tm-text-primary">Latest Photos</h2>
+    <div class="col-6 d-flex justify-content-end align-items-center"></div>
+  </div>
+  <div class="row tm-mb-90 tm-gallery">
+    <!-- Products dict Start -->
+    {% for product in page_obj %}
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+      <figure
+        class="effect-ming tm-video-item figure d-flex justify-content-center"
+        style="width: 300px; height: 250px"
+      >
+        <img
+          src="{% static '/' %}{{product.image.image}}"
+          alt="Image"
+          class="img-fluid"
+        />
+        <figcaption class="d-flex align-items-center justify-content-center">
+          <h2>{{ product.item_name }}</h2>
+          <a href="{% url 'photo-product' product.id %}">View more</a>
+        </figcaption>
+      </figure>
+      <div class="d-flex justify-content-between tm-text-gray">
+        <span class="tm-text-gray-light"
+          >{{ product.date_posted |date:"M d, Y" }}</span
+        >
+        <span>{{ product.views }} views</span>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- Products dict End -->
+  </div>
+  <!-- row -->
+  <div class="row tm-mb-90">
+    <div
+      class="col-12 d-flex justify-content-between align-items-center tm-paging-col"
+    >
+      <div class="pagination">
+        <span class="step-links">
+          <form action="" method="get" class="tm-text-primary">
+            Page
+            <input
+              name="page"
+              type="text"
+              value="{{page_obj.number}}"
+              size="1"
+              class="tm-input-paging tm-text-primary"
+            />
+            of {{ page_obj.paginator.num_pages }}.
+          </form>
+          {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %} {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
