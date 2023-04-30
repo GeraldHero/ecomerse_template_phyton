@@ -49,22 +49,16 @@ def update_image_filename(sender, instance, **kwargs):
         instance.image.name = rename_image(instance, instance.image.name)
 
 
-class ProductVisit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL),
-    timestamp = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user
-
 
 class Product(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    views = models.ManyToManyField(
-        ProductVisit, related_name='views', blank=True)
+    views = models.CharField(max_length=200, blank=True)
     date_posted = models.DateTimeField(auto_now=True)
     item_name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
+    sale_price = models.CharField(max_length=200, blank=True)
+    original_price = models.CharField(max_length=200, blank=True)
     tags = models.ManyToManyField(
         Tag, related_name='tags', blank=True)
 
