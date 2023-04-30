@@ -1,13 +1,41 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product
+from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.paginator import Paginator
- 
+from django.contrib.auth import authenticate, login, logout
+
 # Create your views here.
 
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password')
+         
+        try:
+            user = User.objects.get(email=username)
+             
+        except:
+            messages.error(request, 'User does not exist')
+        
+        user = authenticate(request, email=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            print(user)
+            messages.error(request, 'Username OR password does not exit')
+             
     return render(request, 'base/login_register.html')
 
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
 
 def registerPage(request):
     return render(request, 'base/login_register.html')

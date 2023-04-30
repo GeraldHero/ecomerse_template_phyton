@@ -24,33 +24,53 @@
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
     </div>
-    {% include 'templates/navbar.html' %} {% block body %} {% endblock body %}
+    {% include 'templates/navbar.html' %} {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+      <div
+        class="alert alert-danger alert-dismissible fade show m-2"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container-fluid">{% block body %} {% endblock body %}</div>
     {% include 'templates/footer.html' %}
   </body>
   <script>
-    const mainBody = document.getElementById("mainBody");
+    const mainBody = document.getElementById('mainBody');
 
     function removeAllClassInPath(Filter_Value) {
-      const arrays = document.getElementsByClassName("get-path");
+      const arrays = document.getElementsByClassName('get-path');
 
       // remove the backslash and filter the main value
       // const Filter_Value = e.split("/").filter((e) => e != "")[0];
 
       for (let i = 0; i < arrays.length; i++) {
         // remove all active class
-        arrays[i].classList.remove("active");
+        arrays[i].classList.remove('active');
         // add active in class
         if (arrays[i].id == Filter_Value)
-          return arrays[i].classList.add("active");
+          return arrays[i].classList.add('active');
       }
     }
 
     function stopAnimation() {
-      mainBody.classList.add("loaded");
+      mainBody.classList.add('loaded');
 
       let path = window.location.pathname;
-      if (path != "/") {
-        const filter_path = path.split("/").filter((e) => e != "")[0];
+      if (path != '/') {
+        const filter_path = path.split('/').filter((e) => e != '')[0];
         removeAllClassInPath(filter_path);
       }
 
