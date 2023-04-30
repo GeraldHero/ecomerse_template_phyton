@@ -21,10 +21,40 @@
           original price: P<s>{{product.original_price}} </s> to sale price:
           P{{product.sale_price}} only
         </p>
-
+        {% if user.is_authenticated %}
         <div class="text-center mb-5">
-          <a href="#" class="btn btn-primary tm-btn-big">Add To Cart</a>
+          <a
+            href="{% url 'cart' product.id %}"
+            class="btn btn-primary tm-btn-big"
+            >Add To Cart</a
+          >
+          <a href="#" class="btn btn-success tm-btn-big">Buy Now</a>
         </div>
+
+        {% else %}
+        <div class="text-center mb-5">
+          <a
+            href="#"
+            class="btn btn-primary tm-btn-big disabled"
+            aria-disabled="true"
+            >Add To Cart</a
+          >
+          <a
+            href="#"
+            class="btn btn-success tm-btn-big disabled"
+            aria-disabled="true"
+            >Buy Now</a
+          >
+          <div class="d-flex align-items-center m-5">
+            Log in here:
+            <a href="{% url 'login' %}"
+              ><button class="btn btn-info ml-2">Sign in</button></a
+            >
+          </div>
+        </div>
+
+        {% endif %}
+
         <div class="mb-4 d-flex flex-wrap">
           <div class="mr-4 mb-2">
             <span class="tm-text-gray-dark">Dimension: </span
