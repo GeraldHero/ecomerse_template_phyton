@@ -1,9 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 import os
 from django.utils import timezone
+
+
+class User(AbstractUser):
+    name = models.CharField(max_length=200, null=True)
+    username = models.EmailField(unique=True, null=True)
+    bio = models.TextField(null=True)
+    avatar = models.ImageField(null=True, default="avatar.svg")
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
 
 
 def rename_image(instance, filename):
@@ -49,9 +57,40 @@ def update_image_filename(sender, instance, **kwargs):
         instance.image.name = rename_image(instance, instance.image.name)
 
 
+@receiver(models.signals.post_delete, sender=Image)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.file:
+        if os.path.isfile(instance.file.path):
+            os.remove(instance.file.path)
+
+
+@receiver(models.signals.pre_save, sender=Image)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding `MediaFile` object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = Image.objects.get(pk=instance.pk).file
+    except Image.DoesNotExist:
+        return False
+
+    new_file = instance.file
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
+
 
 class Product(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     views = models.CharField(max_length=200, blank=True)
     date_posted = models.DateTimeField(auto_now=True)

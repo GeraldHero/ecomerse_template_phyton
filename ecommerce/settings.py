@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
- 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,6 +85,8 @@ DATABASES = {
     }
 }
 
+# To allow to access or abstract User model 'appname.modelname'
+AUTH_USER_MODEL = 'base.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -121,17 +122,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/img/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-# Base url to serve media files
-MEDIA_URL = '/media/'
-
 # Path where media is stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_ROOT = BASE_DIR / 'static/img'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

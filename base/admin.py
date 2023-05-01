@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Image, Product, Tag, Format
+from .models import User, Image, Product, Tag, Format
 # Register your models here.
-admin.site.register([Image, Product, Tag, Format])
+admin.site.register([User, Image, Product, Tag, Format])
