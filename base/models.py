@@ -1,7 +1,8 @@
+import os
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
-import os
 from django.utils import timezone
 
 
@@ -42,8 +43,8 @@ class Tag(models.Model):
 
 
 class Image(models.Model):
-    name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='img')
+    name = models.CharField(max_length=255, default=uuid.uuid4)
+    image = models.ImageField()
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -63,9 +64,10 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
+    print(instance.image.path)
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.name)
 
 
 @receiver(models.signals.pre_save, sender=Image)

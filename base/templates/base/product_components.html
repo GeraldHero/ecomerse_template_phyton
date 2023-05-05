@@ -15,7 +15,7 @@
         style="width: 300px; height: 250px"
       >
         <img
-          src="{% static '/' %}{{product.image.image}}"
+          src="{{ product.image.image.url }}"
           alt="Image"
           class="img-fluid"
         />
